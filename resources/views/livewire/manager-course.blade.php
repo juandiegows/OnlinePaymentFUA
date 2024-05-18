@@ -126,15 +126,15 @@
 
 
     </div>
-
     <x-modalSet wire:model.live="showModal" maxWidth2="max-w-[80%]" close="showModal">
 
         <x-slot name="content">
-            <div class="w-full  p-4">
+            <div class="w-full p-4">
                 <button wire:click.prevent="storeOrUpdate" class="text-white float-right mt-4 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     {{ isset($data['id']) ? "Actualizar" : "Guardar" }}
                 </button>
-                <h2 class="text-2xl font-extrabold my-4" wire:click="storeOrUpdate">{{ isset($data['id']) ? "Actualizar" : "Agregar" }} Usuario</h2>
+                <h2 class="text-2xl font-extrabold my-4">{{ isset($data['id']) ? "Actualizar" : "Agregar" }} Curso</h2>
+    
                 <div class="w-full grid grid-cols-2 gap-4">
                     <div>
                         <x-label for="name" value="Nombre" />
@@ -142,36 +142,44 @@
                         <x-input-error for="data.name" />
                     </div>
                     <div>
-                        <x-label for="email" value="Correo Electronico" />
-                        <x-input id="email" type="text" wire:model="data.email" placeholder="Ingrese el email" class="w-full rounded-lg my-2 border-[#E2E8F0]" />
-                        <x-input-error for="data.email" />
+                        <x-label for="course_category_id" value="Categoría del Curso" />
+                        <select id="course_category_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" wire:model="data.course_category_id">
+                            <option value="">-- Seleccione una categoría --</option>
+                            @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error for="data.course_category_id" />
                     </div>
                 </div>
-                @if (!isset($data['id']))
+    
                 <div class="w-full grid grid-cols-2 gap-4 my-2">
                     <div>
-                        <x-label for="password" value="Contraseña" />
-                        <x-password id="password" model="data.password" placeholder="Ingrese el nombre" class="w-full rounded-lg my-2 border-[#E2E8F0]" />
-                        <x-input-error for="data.password" />
+                        <x-label for="url_poster" value="Póster del Curso" />
+                        <input id="url_poster" type="file" wire:model="data.url_poster" class="w-full rounded-lg my-2 border-[#E2E8F0]" />
+                        @if (isset($data['url_poster']) && $data['url_poster'])
+                            <img src="{{ $data['url_poster']->temporaryUrl() }}" alt="Preview" class="w-full h-64 object-cover rounded-lg mt-2">
+                        @endif
+                        <x-input-error for="data.url_poster" />
+                    </div>
+                </div>
+    
+                <div class="w-full grid grid-cols-2 gap-4">
+                    <div>
+                        <x-label for="description" value="Descripción" />
+                        <textarea id="description" wire:model="data.description" placeholder="Ingrese la descripción" class="w-full rounded-lg my-2 border-[#E2E8F0]" rows="4"></textarea>
+                        <x-input-error for="data.description" />
                     </div>
                     <div>
-                        <x-label for="confirm" value="Confirmar contraseña" />
-                        <x-password model="data.password_confirmation" placeholder="confirme" class="w-full rounded-lg my-2 border-[#E2E8F0]" />
-                        <x-input-error for="data.password_confirmation" />
+                        <x-label for="price" value="Precio" />
+                        <x-input id="price" type="text" wire:model="data.price" placeholder="Ingrese el precio" class="w-full rounded-lg my-2 border-[#E2E8F0]" />
+                        <x-input-error for="data.price" />
                     </div>
                 </div>
-                @endif
-
-                <div class="w-full grid grid-cols-2 gap-4">
-                  
-                </div>
-
-
             </div>
-
         </x-slot>
-
+    
     </x-modalSet>
-
+    
 
 </div>
