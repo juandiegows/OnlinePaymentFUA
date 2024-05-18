@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\CourseCategory;
 use App\Traits\WithToastNotifications;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class ManagerCategoryComponent extends Component
@@ -13,7 +14,25 @@ class ManagerCategoryComponent extends Component
     use WithToastNotifications;
 
     public bool $showModal = false;
+    protected function rules()
+    {
+        return [
+            'data.name' => [
+                'required',
+                Rule::unique('categories', 'name')->ignore($this->data['id'] ?? 0),
+            ],
+        ];
+    }
 
+    protected function messages()
+    {
+        return [
+            'data.name.required' => 'El nombre es obligatorio.',
+            'data.name.unique' => 'El nombre ya ha sido tomado.',
+        ];
+    }
+
+   
     public $data = [
         "name" => ""
     ];
@@ -43,6 +62,7 @@ class ManagerCategoryComponent extends Component
 
     public function storeOrUpdate()
     {
+        $this->validate();
         $message = "";
 
         if (isset($this->data['id'])) {
