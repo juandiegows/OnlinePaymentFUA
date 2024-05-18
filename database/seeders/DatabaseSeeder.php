@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             CourseCategorySeeder::class,
-            CourseSaleStatusSeeder::class
+            CourseSaleStatusSeeder::class,
+            TypeContentSeeder::class
+
         ]);
     }
 }

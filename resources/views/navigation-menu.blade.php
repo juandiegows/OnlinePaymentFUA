@@ -20,7 +20,7 @@
                         {{ __('Administrar Usuarios') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('')">
+                    <x-nav-link href="{{ route('manager-course') }}" :active="request()->routeIs('manager-course')">
                         {{ __('Administrar Cursos') }}
                     </x-nav-link>
 
