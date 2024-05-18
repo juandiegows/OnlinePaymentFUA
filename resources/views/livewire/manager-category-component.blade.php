@@ -7,9 +7,9 @@
             <h2 class=" text-center font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Administrar Categorias') }}
             </h2>
-            <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+            <button type="button" wire:click="addOrEdit()" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
 
-                <svg fill="#ffffff"  class="w-3.5 h-3.5 me-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 537.947 537.947" xml:space="preserve" stroke="#ffffff">
+                <svg fill="#ffffff" class="w-3.5 h-3.5 me-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 537.947 537.947" xml:space="preserve" stroke="#ffffff">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                     <g id="SVGRepo_iconCarrier">
@@ -65,14 +65,14 @@
                         </td>
                         <td class="px-16 py-2">
                             <label class="inline-flex items-center cursor-pointer">
-                                <input type="checkbox" wire:click="setActive({{ $categoryItem->id }})"  class="sr-only peer" {{ $categoryItem->active ? 'checked' : '' }}>
+                                <input type="checkbox" wire:click="setActive({{ $categoryItem->id }})" class="sr-only peer" {{ $categoryItem->active ? 'checked' : '' }}>
 
                                 <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             </label>
 
                         </td>
                         <td class="px-16 py-2 flex justify-center">
-                            <span class="text-yellow-500 flex">
+                            <span class="text-yellow-500 flex" wire:click="addOrEdit({{ $categoryItem->id }})">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-700 mx-2" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                     <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
@@ -90,5 +90,25 @@
             </table>
         </div>
 
+
     </div>
+
+    <x-modalSet wire:model.live="showModal" maxWidth2="max-w-[80%]" close="showModal">
+
+        <x-slot name="content">
+            <div class="w-full  p-4">
+
+                <h2 class="text-2xl font-extrabold my-4" wire:click="storeOrUpdate">{{ isset($data['id']) ? "Actualizar" : "Guardar" }} Categoria</h2>
+                <x-input type="text" wire:model="data.name" placeholder="Ingrese el nombre de la categoria" class="w-full rounded-lg border-[#E2E8F0]" />
+
+                <button wire:click.prevent="storeOrUpdate" class="text-white float-right mt-4 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                    {{ isset($data['id']) ? "Actualizar" : "Guardar" }} 
+                </button>
+            </div>
+
+        </x-slot>
+
+    </x-modalSet>
+
+
 </div>
