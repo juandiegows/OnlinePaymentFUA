@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('')">
+                    <x-nav-link href="{{ route('manager-user') }}" :active="request()->routeIs('manager-user')">
                         {{ __('Administrar Usuarios') }}
                     </x-nav-link>
 

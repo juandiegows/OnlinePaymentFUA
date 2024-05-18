@@ -13,6 +13,8 @@ class ManagerCategoryComponent extends Component
 
     use WithToastNotifications;
 
+    public $countRow = 10;
+
     public bool $showModal = false;
     protected function rules()
     {
@@ -37,7 +39,6 @@ class ManagerCategoryComponent extends Component
         "name" => ""
     ];
 
-    public $countRow = 10;
 
     public function render()
     {
