@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\CourseCategory;
 use App\Traits\WithToastNotifications;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 
 class ManagerCategoryComponent extends Component
@@ -17,14 +18,20 @@ class ManagerCategoryComponent extends Component
         "name" => ""
     ];
 
+    public $countRow = 10;
 
     public function render()
     {
         return view('livewire.manager-category-component', [
-            'categories' => CourseCategory::all()
+            'categories' => $this->getData()
         ]);
     }
 
+    public function getData(): LengthAwarePaginator
+    {
+        $query = CourseCategory::query();
+        return $query->paginate($this->countRow ?? 10);
+    }
 
     public function addOrEdit(?CourseCategory $category = null)
     {

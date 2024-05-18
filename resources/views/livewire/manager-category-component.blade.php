@@ -3,10 +3,18 @@
 
 
     <div class="max-w-8xl ">
+        <h2 class=" text-center font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Administrar Categorias') }}
+        </h2>
         <div class="w-[80vw]   mx-auto  flex justify-between mb-4">
-            <h2 class=" text-center font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Administrar Categorias') }}
-            </h2>
+
+            <select id="countries" class="w-60 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" wire:model.live="countRow">
+
+                <option value="10">10 Registros</option>
+                <option value="25">25 Registros</option>
+                <option value="50">50 Registros</option>
+                <option value="100">100 Registros</option>
+            </select>
             <button type="button" wire:click="addOrEdit()" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
 
                 <svg fill="#ffffff" class="w-3.5 h-3.5 me-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 537.947 537.947" xml:space="preserve" stroke="#ffffff">
@@ -25,6 +33,10 @@
         <!-- component -->
         <!-- responsive table-->
         <div class="mt-2 w-full">
+            <div class="w-[80vw] mx-auto my-4">
+                {{ $categories->links() }}
+            </div>
+
             <table class="mx-auto  w-[80vw] ">
                 <thead class="justify-between">
                     <tr class="bg-green-600">
@@ -88,6 +100,11 @@
 
                 </tbody>
             </table>
+
+            <div class="w-[80vw] mx-auto my-4">
+                {{ $categories->links() }}
+            </div>
+
         </div>
 
 
@@ -102,7 +119,7 @@
                 <x-input type="text" wire:model="data.name" placeholder="Ingrese el nombre de la categoria" class="w-full rounded-lg border-[#E2E8F0]" />
 
                 <button wire:click.prevent="storeOrUpdate" class="text-white float-right mt-4 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                    {{ isset($data['id']) ? "Actualizar" : "Guardar" }} 
+                    {{ isset($data['id']) ? "Actualizar" : "Guardar" }}
                 </button>
             </div>
 
