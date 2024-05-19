@@ -34,11 +34,12 @@ class PaymentPage extends Component
 
     public function confirmPurchase()
     {
+        $cartAsArray = array_values($this->cart);
 
         $course = new CourseSale;
         $course->user_id = auth()->user()->id;
         $course->course_sale_status_id = SaleStatusConstante::COMPLETADA;
-        $course->courses = json_encode($this->cart);
+        $course->courses = json_encode($cartAsArray);
         $course->total_to_pay = $this->calculateTotal();
         $course->purchase_date = now();
         $course->save();

@@ -28,7 +28,7 @@
                         {{ __('Administrar Categorias') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('')">
+                    <x-nav-link href="{{ route('sale') }}" :active="request()->routeIs('sale')">
                         {{ __('Ventas de cursos') }}
                     </x-nav-link>
                 </div>

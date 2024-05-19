@@ -12,13 +12,10 @@
             <div>
 
 
-                <x-nav-link href="#" class="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-600 mr-4">
+                <x-nav-link href="{{ route('home') }}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-600 mr-4">
                     Productos
                 </x-nav-link>
 
-                <x-nav-link href="#" class="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-600 mr-4">
-                    Ofertas
-                </x-nav-link>
             </div>
             <div>
                 <x-nav-link href="{{ route('cart') }}" :active="request()->routeIs('cart')" class="text-gray-800 hover:text-gray-600 mr-8">
