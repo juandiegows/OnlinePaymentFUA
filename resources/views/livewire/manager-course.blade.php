@@ -44,15 +44,17 @@
                     <tr class="bg-green-600">
 
                         <th class="px-16 py-2">
-                            <span class="text-gray-100 font-semibold">Nombre</span>
+                            <span class="text-gray-100 font-semibold">Nombre del curso</span>
                         </th>
 
                         <th class="px-16 py-2">
-                            <span class="text-gray-100 font-semibold">Email</span>
+                            <span class="text-gray-100 font-semibold">Categoria</span>
                         </th>
-
                         <th class="px-16 py-2">
-                            <span class="text-gray-100 font-semibold">Role</span>
+                            <span class="text-gray-100 font-semibold">Descripcion</span>
+                        </th>
+                        <th class="px-16 py-2">
+                            <span class="text-gray-100 font-semibold">Precio</span>
                         </th>
 
                         <th class="px-16 py-2">
@@ -72,36 +74,38 @@
                     </tr>
                 </thead>
                 <tbody class="bg-gray-200">
-                    @forelse ($courses as $UserItem )
+                    @forelse ($courses as $courseItem )
                     <tr class="bg-white border-b-2 border-gray-200 text-center">
 
                         <td>
-                            <span class="text-center ml-2 font-semibold">{{ $UserItem->name }}</span>
+                            <span class="text-center ml-2 font-semibold">{{ $courseItem->name }}</span>
                         </td>
 
                         <td>
-                            <span class="text-center ml-2 font-semibold">{{ $UserItem->email ?? "" }}</span>
+                            <span class="text-center ml-2 font-semibold">{{ $courseItem->category->name ?? "" }}</span>
                         </td>
-
                         <td>
-                            <span class="text-center ml-2 font-semibold">{{ $UserItem->role->name ?? "" }}</span>
+                            <span class="text-center ml-2 font-semibold">{{ substr( $courseItem->description, 0, 100) }}</span>
+                        </td>
+                        <td>
+                            <span class="text-center ml-2 font-semibold">{{ $courseItem->price ?? "" }}</span>
                         </td>
                         <td class="px-16 py-2">
-                            <span>{{ $UserItem->updated_at }}</span>
+                            <span>{{ $courseItem->updated_at }}</span>
                         </td>
                         <td class="px-16 py-2">
-                            <span>{{ $UserItem->created_at }}</span>
+                            <span>{{ $courseItem->created_at }}</span>
                         </td>
                         <td class="px-16 py-2">
                             <label class="inline-flex items-center cursor-pointer">
-                                <input type="checkbox" wire:click="setActive({{ $UserItem->id }})" class="sr-only peer" {{ $UserItem->active ? 'checked' : '' }}>
+                                <input type="checkbox" wire:click="setActive({{ $courseItem->id }})" class="sr-only peer" {{ $courseItem->active ? 'checked' : '' }}>
 
                                 <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             </label>
 
                         </td>
                         <td class="px-16 py-2 flex justify-center">
-                            <span class="text-yellow-500 flex" wire:click="addOrEdit({{ $UserItem->id }})">
+                            <span class="text-yellow-500 flex" wire:click="addOrEdit({{ $courseItem->id }})">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-700 mx-2" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                     <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
@@ -126,15 +130,15 @@
 
 
     </div>
-    <x-modalSet wire:model.live="showModal" maxWidth2="max-w-[80%]" close="showModal">
 
+    <x-modalSet wire:model.live="showModal" maxWidth2="max-w-[80%]" close="showModal">
         <x-slot name="content">
             <div class="w-full p-4">
                 <button wire:click.prevent="storeOrUpdate" class="text-white float-right mt-4 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     {{ isset($data['id']) ? "Actualizar" : "Guardar" }}
                 </button>
                 <h2 class="text-2xl font-extrabold my-4">{{ isset($data['id']) ? "Actualizar" : "Agregar" }} Curso</h2>
-    
+
                 <div class="w-full grid grid-cols-2 gap-4">
                     <div>
                         <x-label for="name" value="Nombre" />
@@ -152,18 +156,22 @@
                         <x-input-error for="data.course_category_id" />
                     </div>
                 </div>
-    
+
                 <div class="w-full grid grid-cols-2 gap-4 my-2">
                     <div>
                         <x-label for="url_poster" value="Póster del Curso" />
                         <input id="url_poster" type="file" wire:model="data.url_poster" class="w-full rounded-lg my-2 border-[#E2E8F0]" />
                         @if (isset($data['url_poster']) && $data['url_poster'])
-                            <img src="{{ $data['url_poster']->temporaryUrl() }}" alt="Preview" class="w-full h-64 object-cover rounded-lg mt-2">
+                        @if (is_object($data['url_poster']))
+                        <img src="{{ $data['url_poster']->temporaryUrl() }}" alt="Preview" class="w-full h-64 object-cover rounded-lg mt-2">
+                        @else
+                        <img src="{{  Storage::url($data['url_poster'])  }}" alt="Preview" class="w-full h-64 object-cover rounded-lg mt-2">
+                        @endif
                         @endif
                         <x-input-error for="data.url_poster" />
                     </div>
                 </div>
-    
+
                 <div class="w-full grid grid-cols-2 gap-4">
                     <div>
                         <x-label for="description" value="Descripción" />
@@ -176,10 +184,53 @@
                         <x-input-error for="data.price" />
                     </div>
                 </div>
+
+                <h3 class="text-xl font-bold mt-6">Capítulos</h3>
+                @foreach ($chapters as $index => $chapter)
+                <div class="w-full grid grid-cols-2 gap-4 mt-4 border-b pb-4">
+                    <div>
+                        <x-label for="chapter_title_{{ $index }}" value="Título del Capítulo" />
+                        <x-input id="chapter_title_{{ $index }}" type="text" wire:model="chapters.{{ $index }}.title" placeholder="Ingrese el título" class="w-full rounded-lg my-2 border-[#E2E8F0]" />
+                        <x-input-error for="chapters.{{ $index }}.title" />
+                    </div>
+                    <div>
+                        <x-label for="chapter_url_{{ $index }}" value="URL del Capítulo" />
+                        <x-input id="chapter_url_{{ $index }}" type="text" wire:model="chapters.{{ $index }}.url" placeholder="Ingrese la URL" class="w-full rounded-lg my-2 border-[#E2E8F0]" />
+                        <x-input-error for="chapters.{{ $index }}.url" />
+                    </div>
+                    <div>
+                        <x-label for="chapter_duration_{{ $index }}" value="Duración (segundos)" />
+                        <x-input id="chapter_duration_{{ $index }}" type="text" wire:model="chapters.{{ $index }}.duration_second" placeholder="Ingrese la duración" class="w-full rounded-lg my-2 border-[#E2E8F0]" />
+                        <x-input-error for="chapters.{{ $index }}.duration_second" />
+                    </div>
+                    <div>
+                        <x-label for="chapter_type_content_{{ $index }}" value="Tipo de Contenido" />
+                        <select id="chapter_type_content_{{ $index }}" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" wire:model="chapters.{{ $index }}.type_content_id">
+                            <option value="">-- Seleccione un tipo de contenido --</option>
+                            @foreach ($typeContents as $typeContent)
+                            <option value="{{ $typeContent->id }}">{{ $typeContent->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error for="chapters.{{ $index }}.type_content_id" />
+                    </div>
+                    <div class="col-span-2 flex justify-between mt-2">
+                        @if ($index > 0)
+                        <button type="button" wire:click.prevent="moveChapterUp({{ $index }})" class="text-blue-600">Subir</button>
+                        @endif
+                        @if ($index < count($chapters) - 1) <button type="button" wire:click.prevent="moveChapterDown({{ $index }})" class="text-blue-600">Bajar</button>
+                            @endif
+                            <button type="button" wire:click.prevent="removeChapter({{ $index }})" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700">Eliminar</button>
+
+                    </div>
+                </div>
+                @endforeach
+                <button type="button" wire:click.prevent="addChapter" class="text-white mt-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
+                    Agregar Capítulo
+                </button>
             </div>
         </x-slot>
-    
     </x-modalSet>
-    
+
+
 
 </div>

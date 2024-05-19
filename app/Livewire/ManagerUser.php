@@ -109,7 +109,7 @@ class ManagerUser extends Component
                 $message = "Se ha actualizado correctamente";
             } else {
                 $user = new User();
-                $user->forceFill($this->data);
+                $user->fill($this->data);
                 $message = "Se ha guardado correctamente";
             }
             $user->save();
