@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(CourseCategory::class)->constrained();
             $table->text('description')->nullable();
             $table->decimal('price')->default(0);
+            $table->boolean('active')->default(0);
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
         });

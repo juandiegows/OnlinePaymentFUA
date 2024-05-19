@@ -161,6 +161,13 @@ class ManagerCourse extends Component
         toastr()->success($message);
         $this->reset('data', 'chapters', 'chaptersToDelete');
     }
+    public function setActive(Course $course)
+    {
+        $course->active = !$course->active;
+        $course->save();
+        $message = "Se ha  " . ($course->active ? "Activado" : "Desactivado") . " el curso " . $course->name;
+        toastr()->success($message);
+    }
 
   
 }
