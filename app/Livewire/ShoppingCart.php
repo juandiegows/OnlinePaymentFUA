@@ -32,5 +32,10 @@ class ShoppingCart extends Component
         $this->loadCart();
     }
 
+    public function proceedToCheckout()
+    {
+        return redirect()->route('payment');
+    }
+
 
 }

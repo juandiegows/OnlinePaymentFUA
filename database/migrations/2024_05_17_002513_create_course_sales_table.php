@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(CourseSaleStatus::class)->constrained();
             $table->json('courses');
-            $table->json('records');
             $table->decimal('total_to_pay');
             $table->datetime('purchase_date');
             $table->timestamps();

@@ -16,7 +16,7 @@
 
         <div class="mt-6 flex justify-between">
             <button wire:click="clearCart" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">Limpiar Carrito</button>
-            <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md">Pagar</button>
+            <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md" wire:click="proceedToCheckout">Pagar</button>
         </div>
     @endif
 </div>

@@ -3,12 +3,13 @@
 use App\Livewire\ManagerCategoryComponent;
 use App\Livewire\ManagerCourse;
 use App\Livewire\ManagerUser;
+use App\Livewire\PaymentPage;
 use App\Livewire\ShoppingCart;
 use App\Livewire\Welcome;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/',Welcome::class);
+Route::get('/',Welcome::class)->name('home');
 
 Route::middleware([
     'auth:sanctum',
@@ -27,5 +28,6 @@ Route::middleware([
     Route::post('/cart/add/{course}', ManagerCourse::class)->name('cart.add');
     Route::get('/cart', ShoppingCart::class)->name('cart');
     Route::get('/courses/{course}', ManagerCourse::class)->name('courses.show');
+    Route::get('/payment', PaymentPage::class)->name('payment');
 
 });
