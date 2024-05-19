@@ -18,7 +18,7 @@
         @livewireStyles
     </head>
     <body>
-        @include('navigation-menu-guest')
+        @livewire('navigation-menu-guest')
         <div class="font-sans text-gray-900 antialiased">
             {{ $slot }}
         </div>

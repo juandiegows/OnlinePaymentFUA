@@ -3,6 +3,7 @@
 use App\Livewire\ManagerCategoryComponent;
 use App\Livewire\ManagerCourse;
 use App\Livewire\ManagerUser;
+use App\Livewire\ShoppingCart;
 use App\Livewire\Welcome;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ Route::middleware([
     // routes/web.php
 
     Route::post('/cart/add/{course}', ManagerCourse::class)->name('cart.add');
-    Route::post('/cart', ManagerCourse::class)->name('cart');
+    Route::get('/cart', ShoppingCart::class)->name('cart');
     Route::get('/courses/{course}', ManagerCourse::class)->name('courses.show');
 
 });

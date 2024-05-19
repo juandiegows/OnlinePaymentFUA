@@ -30,7 +30,7 @@
                         </g>
                     </svg>
 
-                    Carrito ({{ $count }})
+                    Carrito ({{ count(Session::get('cart', [])) }})
                 </x-nav-link>
                 @auth
                 <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="text-gray-800 hover:text-gray-600 mr-4">
