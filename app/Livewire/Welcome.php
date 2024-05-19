@@ -14,9 +14,9 @@ class Welcome extends Component
         return view('livewire.welcome', ['courses' => Course::all()])->layout('layouts.guest');
     }
 
-    public function addToCart($courseId)
+    public function addToCart($courseId, $buy = false)
     {
-   
+
         $course = Course::findOrFail($courseId);
         $cart = Session::get('cart', []);
 
@@ -29,10 +29,13 @@ class Welcome extends Component
                 'price' => $course->price,
                 'quantity' => 1
             ];
-       
 
-        Session::put('cart', $cart);
-    }
-    $this->dispatch('cartUpdated');
+
+            Session::put('cart', $cart);
+        }
+        $this->dispatch('cartUpdated');
+        if ($buy) {
+            return redirect('cart');
+        }
     }
 }
