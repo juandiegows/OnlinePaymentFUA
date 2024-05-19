@@ -3,11 +3,11 @@
 use App\Livewire\ManagerCategoryComponent;
 use App\Livewire\ManagerCourse;
 use App\Livewire\ManagerUser;
+use App\Livewire\Welcome;
+use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',Welcome::class);
 
 Route::middleware([
     'auth:sanctum',
@@ -21,4 +21,10 @@ Route::middleware([
     Route::get('/categorias', ManagerCategoryComponent::class)->name('manager-category');
     Route::get('/manager-user', ManagerUser::class)->name('manager-user');
     Route::get('/manager-course', ManagerCourse::class)->name('manager-course');
+    // routes/web.php
+
+    Route::post('/cart/add/{course}', ManagerCourse::class)->name('cart.add');
+    Route::post('/cart', ManagerCourse::class)->name('cart');
+    Route::get('/courses/{course}', ManagerCourse::class)->name('courses.show');
+
 });
