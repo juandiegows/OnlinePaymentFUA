@@ -106,7 +106,6 @@ class ManagerCourse extends Component
     public function getData(): LengthAwarePaginator
     {
         $query = Course::query();
-        $query->where('id', '!=', auth()->user()->id);
         return $query->paginate($this->countRow ?? 10);
     }
 

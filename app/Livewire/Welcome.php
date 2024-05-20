@@ -11,7 +11,7 @@ class Welcome extends Component
 
     public function render()
     {
-        return view('livewire.welcome', ['courses' => Course::all()])->layout('layouts.guest');
+        return view('livewire.welcome', ['courses' => Course::where('active', true)->get()])->layout('layouts.guest');
     }
 
     public function addToCart($courseId, $buy = false)

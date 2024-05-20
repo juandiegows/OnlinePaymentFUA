@@ -21,7 +21,7 @@ class ManagerCategoryComponent extends Component
         return [
             'data.name' => [
                 'required',
-                Rule::unique('categories', 'name')->ignore($this->data['id'] ?? 0),
+                Rule::unique('course_categories', 'name')->ignore($this->data['id'] ?? 0),
             ],
         ];
     }
